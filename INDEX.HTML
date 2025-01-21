@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMB 2025 App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page active">
+        <h2>Login Page</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" required><br><br>
+
+            <label for="field">Select Field of Study:</label>
+            <select id="field" required>
+                <option value="art">Art</option>
+                <option value="science">Science</option>
+            </select><br><br>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Subject Combination Page -->
+    <div id="subjectCombinationPage" class="page">
+        <h2>Subject Combinations</h2>
+        <div id="subjectDetails"></div>
+        <button onclick="goToQuestions()">Proceed to JAMB Questions</button>
+    </div>
+
+    <!-- JAMB Questions Page -->
+    <div id="jambQuestionsPage" class="page">
+        <h2>JAMB Questions (2025)</h2>
+        <div id="questions"></div>
+    </div>
+
+    <script>
+        // Function to handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const field = document.getElementById('field').value;
+
+            if (username && password) {
+                // Hide the login page and show the subject combination page
+                showPage('subjectCombinationPage');
+                showSubjectCombination(field);
+            } else {
+                alert("Please fill in all fields!");
+            }
+        });
+
+        // Function to show the relevant subject combination based on the field selected
+        function showSubjectCombination(field) {
+            const subjectDetails = document.getElementById('subjectDetails');
+            let subjectInfo = '';
+
+            if (field === 'art') {
+                subjectInfo = `
+                    <h3>Art Subjects:</h3>
+                    <ul>
+                        <li>English Language</li>
+                        <li>Literature in English</li>
+                        <li>Government</li>
+                        <li>History</li>
+                        <li>Economics</li>
+                    </ul>
+                `;
+            } else if (field === 'science') {
+                subjectInfo = `
+                    <h3>Science Subjects:</h3>
+                    <ul>
+                        <li>English Language</li>
+                        <li>Mathematics</li>
+                        <li>Chemistry</li>
+                        <li>Physics</li>
+                        <li>Biology</li>
+                    </ul>
+                `;
+            }
+            subjectDetails.innerHTML = subjectInfo;
+        }
+
+        // Function to go to the JAMB questions page
+        function goToQuestions() {
+            const field = document.getElementById('field').value;
+            showPage('jambQuestionsPage');
+            showJambQuestions(field);
+        }
+
+        // Function to show JAMB questions based on the field selected
+        function showJambQuestions(field) {
+            const questionsContent = document.getElementById('questions');
+            let questions = '';
+
+            if (field === 'art') {
+                questions = `
+                    <h3>Literature in English Question 1:</h3>
+                    <p>Who wrote "Things Fall Apart"?</p>
+                    <ul>
+                        <li>A. Wole Soyinka</li>
+                        <li>B. Chinua Achebe</li>
+                        <li>C. Ngugi wa Thiong'o</li>
+                        <li>D. Chimamanda Ngozi Adichie</li>
+                    </ul>
+                    <p>Answer: B. Chinua Achebe</p>
+
+                    <h3>Government Question 1:</h3>
+                    <p>Who was the first President of Nigeria?</p>
+                    <ul>
+                        <li>A. Olusegun Obasanjo</li>
+                        <li>B. Nnamdi Azikiwe</li>
+                        <li>C. Yakubu Gowon</li>
+                        <li>D. Muhammadu Buhari</li>
+                    </ul>
+                    <p>Answer: B. Nnamdi Azikiwe</p>
+                `;
+            } else if (field === 'science') {
+                questions = `
+                    <h3>Mathematics Question 1:</h3>
+                    <p>What is 5 + 3?</p>
+                    <ul>
+                        <li>A. 6</li>
+                        <li>B. 7</li>
+                        <li>C. 8</li>
+                        <li>D. 9</li>
+                    </ul>
+                    <p>Answer: C. 8</p>
+
+                    <h3>Chemistry Question 1:</h3>
+                    <p>What is the chemical symbol for water?</p>
+                    <ul>
+                        <li>A. CO2</li>
+                        <li>B. O2</li>
+                        <li>C. H2O</li>
+                        <li>D. NaCl</li>
+                    </ul>
+                    <p>Answer: C. H2O</p>
+                `;
+            }
+            questionsContent.innerHTML = questions;
+        }
+
+        // Function to show the active page and hide others
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            const activePage = document.getElementById(pageId);
+            activePage.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
